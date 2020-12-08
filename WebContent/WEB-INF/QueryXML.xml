@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!-- SQl Queries for java web application -->
+
+<Querys>
+
+
+
+
+	<!-- ***SQL Queries for Feedback*** -->
+
+	
+	<!-- Insert feedbacks to tables -->
+	<query ids="insert_feedback">
+		<![CDATA[
+			INSERT INTO feedback(feedbackID, email, subject, comment)
+			VALUES(?,?,?,?)
+		]]>
+	</query>
+
+
+
+	<!-- Select feedbacks from tables -->
+	<query ids="select_feedback">
+		<![CDATA[
+			SELECT * FROM feedback
+		]]>
+	</query>
+
+
+
+	<!-- Select feedbacks from id -->
+	<query ids="get_feedback_id">
+		<![CDATA[
+			SELECT f.feedbackID FROM feedback as f
+		]]>
+	</query>
+
+
+	<!-- ********************************************************************* -->
+
+
+
+	
+	<!-- ***SQL Queries for Doctor*** -->
+
+
+	<!-- Insert doctor details to table -->
+	<query ids="insert_doctor">
+		<![CDATA[
+			INSERT INTO doctor(dID, docName, NIC, phone, email, userName, password, specialization)
+			VALUES(?,?,?,?,?,?,?,?)
+		]]>
+	</query>
+
+
+
+	<!-- select doctors details from doctor table -->
+	<query ids="select_doctor">
+		<![CDATA[
+			SELECT * FROM doctor where NOT doctor.dID = "D1000" 
+		]]>
+	</query>
+
+
+
+	<!-- select doctor id from the doctor table -->
+	<query ids="get_doctor_id">
+		<![CDATA[
+			SELECT d.dID FROM doctor as d
+		]]>
+	</query>
+
+
+
+	<!-- Delete a particular doctor by id Query -->
+	<query ids="delete_doctor">
+         <![CDATA[        
+            delete from doctor where doctor.dID = ?
+        ]]>
+	</query>
+
+
+	
+	<!-- Select a particular doctor by id Query -->
+	<query ids="doctor_by_id">
+         <![CDATA[        
+            select * from doctor where doctor.dID = ?
+        ]]>
+	</query>
+	
+
+	<!-- update doctor and admin by id Query -->
+	<query ids="update_doctor_admin">
+         <![CDATA[        
+           UPDATE doctor as d
+           set d.docName =?, d.NIC = ?, d.phone =?, d.email =?, d.userName=?, d.password=?, d.specialization=?
+			where d.dID =? 
+        ]]>
+	</query>
+	
+	
+	
+	<!-- ********************************************************************* -->	
+	
+	
+	
+	<!-- ***SQL Queries for Login doctor and admin*** -->
+	
+	
+	
+	<!-- login a particular user Query -->
+	<query ids="login_doctor_admin">
+         <![CDATA[        
+           SELECT * from doctor where(userName = ? or email = ?) and password = ?
+        ]]>
+	</query>
+	
+	
+	
+	<!-- login by user name Query -->
+	<query ids="login_by_username">
+         <![CDATA[        
+           SELECT * from doctor where userName = ?
+        ]]>
+	</query>
+	
+	
+	
+	<!-- login by email Query -->
+	<query ids="login_by_email">
+         <![CDATA[        
+           SELECT * from doctor where email = ?
+        ]]>
+	</query>
+	
+
+
+	<!-- ********************************************************************* -->
+
+
+
+
+	<!-- ***SQL Queries for search*** -->
+
+
+	<!-- select details from the hospital table -->
+	<query ids="search_hospital">
+         <![CDATA[        
+           SELECT hID,docName,specialization,hName FROM hospital order by dID asc
+        ]]>
+	</query>
+	
+	
+	
+	<!-- display results to user according to the availability -->
+	<query ids="get_session_by_id">
+         <![CDATA[        
+           SELECT sID,dID,docName,day,time,fee from sessions where sessions.avalability="yes" and  sessions.hID = ? 
+        ]]>
+	</query>
+	
+
+
+	<!-- ********************************************************************* -->
+
+
+
+	<!-- ***SQL Queries for hospital*** -->
+
+	
+	
+	<!-- select hospital id from the hospital table -->
+	<query ids="get_hospital_id">
+         <![CDATA[        
+           SELECT h.hID FROM hospital as h
+        ]]>
+	</query>
+	
+	
+	
+	<!-- insert details into hospital table -->
+	<query ids="insert_hospital">
+		<![CDATA[
+			INSERT INTO hospital(hID, dID,docName,specialization, hName)
+			VALUES(?,?,?,?,?)
+		]]>
+	</query>
+	
+	
+	
+	<!-- select hospital details order according to doctor id  -->
+	<query ids="select_hospital">
+         <![CDATA[        
+           SELECT hID, dID,docName, hName FROM hospital order by dID asc
+        ]]>
+	</query>
+	
+	
+	
+	<!-- update hospital by id Query -->
+	<query ids="update_hospital">
+         <![CDATA[        
+           UPDATE hospital as h
+           set h.hName =?
+			where h.hID =? 
+        ]]>
+	</query>
+	
+	
+
+	<!-- delete a certain hospital regarding to hospital id -->
+	<query ids="delete_hospital">
+         <![CDATA[  
+         delete from hospital where hospital.hID = ?      
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete a certain hospital regarding to hospital id when doctor is deleting-->
+	<query ids="delete_hospital_by_hID">
+         <![CDATA[  
+         delete from hospital where hospital.hID = ?      
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete a certain hospital regarding to doctor id -->
+	<query ids="delete_hospital_by_dID">
+         <![CDATA[  
+         delete from hospital where hospital.dID = ?      
+        ]]>
+	</query>
+	
+	
+	
+	
+	<!-- ********************************************************************* -->
+	
+	
+	
+	
+	<!-- ***SQL Queries for Sessions*** -->
+	
+	
+	<!-- get session id from the session table -->
+	<query ids="get_sessions_id">
+		<![CDATA[
+			SELECT s.sID FROM sessions as s
+		]]>
+	</query>
+	
+	
+	<!-- insert details to session table -->
+	<query ids="insert_sessions">
+		<![CDATA[
+			INSERT INTO sessions(sID, hID, dID,docName,day, time, avalability, fee )
+			VALUES(?,?,?,?,?,?,?,?)
+		]]>
+	</query>
+	
+	
+	
+	<!-- select details in the session details according to assending oder of doctor -->
+	<query ids="select_sessions">
+         <![CDATA[        
+           SELECT * FROM sessions order by dID asc
+        ]]>
+	</query>
+	
+	
+	
+	<!-- update session by id Query -->
+	<query ids="update_sessions">
+         <![CDATA[        
+           UPDATE sessions as s
+           set s.day =?, s.time =?, s.avalability =?, s.fee=?
+			where s.sID =? 
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete details in the session table according to the session id -->
+	<query ids="delete_session_by_sID">
+         <![CDATA[  
+         delete from sessions where sessions.sID = ?      
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete details in the session table according to the hospital id -->
+	<query ids="delete_session_by_hID">
+         <![CDATA[  
+         delete from sessions where sessions.hID = ?      
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete details in the session table according to the doctor id -->
+	<query ids="delete_session_by_dID">
+         <![CDATA[     
+         delete from sessions where sessions.dID=?   
+        ]]>
+	</query>
+	
+	
+	
+	
+	<!-- ********************************************************************* -->
+	
+	
+	
+	<!-- ***SQL Queries for Booking*** -->
+	
+	
+	<!-- get booking id from the booking table -->
+	<query ids="get_book_id">
+		<![CDATA[
+			SELECT b.bID FROM booking as b
+		]]>
+	</query>
+	
+	
+	
+	<!-- update booking details in the booking table -->
+	<query ids="update_booking">
+		<![CDATA[
+			update booking as b
+			set b.cName = ?, b.cEmail = ?, b.cNIC = ?
+			where b.bID =?
+		]]>
+	</query>
+	
+	
+	
+	<!-- insert booking details into booking table -->
+	<query ids="insert_booking">
+		<![CDATA[
+		INSERT INTO booking(bID,hID,sID, dID, cName, cEmail, cNIC, cardName, cardNo, expDate, cvc, fee )
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?)	
+		]]>
+	</query>
+	
+	
+	
+	<!-- count no of bookings -->
+	<query ids="get_no_of_booking">
+		<![CDATA[
+			select bID,hID,sID, dID, cName, cEmail, cNIC, cardName, cardNo, expDate, cvc, fee,count(dID) from booking
+			where dID = ?		
+		]]>
+	</query>
+	
+	
+	<!-- delete details in the booking table using doctor id -->
+	<query ids="delete_booking_by_dID">
+         <![CDATA[     
+         delete from booking where booking.dID=?   
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete details in the booking table using hospital id -->
+	<query ids="delete_booking_by_hID">
+         <![CDATA[     
+         delete from booking where booking.hID=?   
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete details in the booking table using session id -->
+	<query ids="delete_booking_by_sID">
+         <![CDATA[     
+         delete from booking where booking.sID=?   
+        ]]>
+	</query>
+	
+	
+	
+	<!-- delete details in the booking table using booking id -->
+	<query ids="delete_booking_by_bID">
+         <![CDATA[     
+         delete from booking where booking.bID=?   
+        ]]>
+	</query>
+
+
+
+<!-- ********************************************************************* -->
+
+
+	
+</Querys>
